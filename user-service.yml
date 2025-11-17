@@ -1,0 +1,46 @@
+server:
+  port: ${SERVER_PORT:8081}
+
+spring:
+  application:
+    name: user-service
+
+  datasource:
+    url: ${JDBC_URL:jdbc:postgresql://localhost:5432/userservicedb}
+    username: ${DB_USER:mustardblues}
+    password: ${DB_PASS:mustardblues}
+    driver-class-name: org.postgresql.Driver
+
+  kafka:
+    producer:
+      bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+
+logging:
+  level:
+    edu.aston.userservice: ${LOG_LEVEL_APP:INFO}
+    org.springdoc: ${LOG_LEVEL_SPRINGDOC:DEBUG}
+    org.springframework.web: ${LOG_LEVEL_WEB:DEBUG}
+    org.springframework.web.servlet.mvc: ${LOG_LEVEL_MVC:DEBUG}
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} %-5level %-50logger - %msg%n"
+  register-shutdown-hook: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+  api-docs:
+    path: /api-docs
+  packages-to-scan:
+    - edu.aston.userservice
