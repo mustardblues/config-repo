@@ -11,6 +11,10 @@ spring:
     password: ${DB_PASS:mustardblues}
     driver-class-name: org.postgresql.Driver
 
+  jpa:
+    hibernate:
+      ddl-auto: update
+
   kafka:
     producer:
       bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
